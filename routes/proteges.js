@@ -7,6 +7,13 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// ADDED THIS 
+router.route('/:id').get((req, res) => {
+  Protege.findById(req.params.id)
+    .then(item => res.json(item))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req, res) => {
   const protegename = req.body.protegename;
   const protegeemail = req.body.protegeemail;
@@ -27,5 +34,7 @@ router.route('/add').post((req, res) => {
     .then(() => res.json('Protege added!'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
+
 
 module.exports = router;
