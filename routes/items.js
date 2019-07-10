@@ -11,7 +11,7 @@ router.route('/add').post((req, res) => {
   const protegename = req.body.protegename;
   const protegeId = req.body.protegeId
   const description = req.body.description;
-  const expenditure = (req.body.expenditure);
+  const expenditure = Number(req.body.expenditure);
   const date =(req.body.date);
 
   const newItem = new Item({
