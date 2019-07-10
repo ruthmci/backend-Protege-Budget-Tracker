@@ -6,6 +6,12 @@ router.route('/').get((req, res) => {
     .then(proteges => res.json(proteges))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+//Added this
+router.route('/:id').get((req, res) => {
+  Protege.findById(req.params.id)
+    .then(item => res.json(item))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
 
 router.route('/add').post((req, res) => {
   const protegename = req.body.protegename;

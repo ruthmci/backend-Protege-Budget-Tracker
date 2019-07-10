@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 
 const itemSchema = new Schema({
   protegename: { type: String, required: true },
+  _protegeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Protege' },
   description: { type: String, required: true },
-  amount: { type: Number, required: true },
+  expenditure: { type: Number },
   date: { type: Date },
 }, {
   timestamps: true,
