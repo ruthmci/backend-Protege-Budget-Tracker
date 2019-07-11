@@ -10,7 +10,7 @@ router.route('/').get((req, res) => {
 //Added this
 router.route('/:id').get((req, res) => {
   Protege.findById(req.params.id)
-  .then(async protege => {
+  .then(async (protege) => {
     const items = await findUserItems(protege._id)
     return{protege, items}
   })

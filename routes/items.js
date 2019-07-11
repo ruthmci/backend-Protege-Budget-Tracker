@@ -9,7 +9,7 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
  
-  const protege_id = req.body.protegeId
+  const protege_id = req.body.protegeId;
   const description = req.body.description;
   const expenditure = Number(req.body.expenditure);
   const date =(req.body.date);
@@ -38,7 +38,7 @@ router.route('/:id').get((req, res) => {
 //     .catch(err => res.status(400).json('Error: ' + err));
 // });
 
-router.route('/update/:id').post((req, res) => {
+router.route('/update/:id').patch((req, res) => {
   Item.findById(req.params.id)
     .then(item => {
       item.protege_id = req.body.protegeId;
