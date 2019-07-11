@@ -5,13 +5,16 @@ const Schema = mongoose.Schema;
 const protegeSchema = new Schema({
   protegename: { type: String, required: true,
   },
-  email:{type: String},
+  protegeemail:{type: String,
+    unique: true,},
   expenditure: { type: Number },
-  balance: { type: Number, required: true },
+  balance: { type: Number},
   date: { type: Date },
 }, {
-  timestamps: true,
+    timestamps: true,
 });
+
+
 
 const Protege = mongoose.model('Protege', protegeSchema);
 
