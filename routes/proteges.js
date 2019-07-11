@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Protege = require('../models/proteges.model');
+let Item = require('../models/items.model');
 
 router.route('/').get((req, res) => {
   Protege.find()
@@ -9,10 +10,17 @@ router.route('/').get((req, res) => {
 //Added this
 router.route('/:id').get((req, res) => {
   Protege.findById(req.params.id)
-    .then(item => res.json(item))
+  .then(async protege => {
+    const items = await findUserItems(protege._id)
+    return{protege, items}
+  })
+    .then(protege=> res.json(protege))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+findUserItems = async (protegeId) => {
+  return await Item.find({protege_id: protegeId })
+}
 router.route('/add').post((req, res) => {
   const protegename = req.body.protegename;
   const protegeemail = req.body.protegeemail;

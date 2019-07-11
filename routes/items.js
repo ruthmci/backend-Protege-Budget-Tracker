@@ -1,5 +1,5 @@
 const router = require('express').Router();
-let Item = require('../models/items.models');
+let Item = require('../models/items.model');
 
 router.route('/').get((req, res) => {
   Item.find()
@@ -8,15 +8,14 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-  const protegename = req.body.protegename;
-  const protegeId = req.body.protegeId
+ 
+  const protege_id = req.body.protegeId
   const description = req.body.description;
   const expenditure = Number(req.body.expenditure);
   const date =(req.body.date);
 
   const newItem = new Item({
-    protegename,
-    protegeId,
+    protege_id,
     description,
     expenditure,
     date,
@@ -42,7 +41,7 @@ router.route('/:id').get((req, res) => {
 router.route('/update/:id').post((req, res) => {
   Item.findById(req.params.id)
     .then(item => {
-      item.protegeId = req.body.protegeId;
+      item.protege_id = req.body.protegeId;
       item.description = req.body.description;
       item.expenditure = Number(req.body.expenditure);
       item.date = (req.body.date);
