@@ -4,9 +4,17 @@ let Item = require('../models/items.model');
 
 router.route('/').get((req, res) => {
   Protege.find()
-    .then(proteges => res.json(proteges))
+  . then (proteges => {
+    const protegesWithItems = Promise.all(proteges.map(async protege => {
+      const items = await findUserItems(protege._id)
+    return{protege, items}
+    }))
+    return protegesWithItems
+  })
+    .then(protegesWithItems => res.json(protegesWithItems))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
 //Added this
 router.route('/:id').get((req, res) => {
   Protege.findById(req.params.id)
