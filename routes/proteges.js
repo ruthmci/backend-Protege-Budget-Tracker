@@ -15,7 +15,13 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-//Added this
+
+router.route('/:id').delete((req, res) => {
+  Protege.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Protege deleted.'))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/:id').get((req, res) => {
   Protege.findById(req.params.id)
   .then(async (protege) => {
@@ -30,6 +36,8 @@ router.route('/:id').get((req, res) => {
 findUserItems = async (protegeId) => {
   return await Item.find({protege_id: protegeId })
 }
+
+
 
 router.route('/add').post((req, res) => {
   const protegename = req.body.protegename;
@@ -48,10 +56,25 @@ router.route('/add').post((req, res) => {
   
 
   newProtege.save()
-    .then(() => res.json('Protege added!'))
+    .then((newProtege) => res.send(newProtege))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+
+
+
+router.route('/update/:id').patch((req, res) => {
+  Protege.findById(req.params.id)
+    .then(protege => {
+      protege.protegename = req.body.protegename;
+      protege.protegeemail = (req.body.protegeemail);
+
+      protege.save()
+        .then(() => res.json('Protege updated!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+});
 
 
 module.exports = router;
