@@ -1,0 +1,14 @@
+{
+  "name": "protege-budget-tracker",
+  "alias": "protege-budget-tracker",
+  "env": {
+    "ATLAS_URI": "mongodb+srv://Sreevidhya:Friends5@cluster0-m7x4o.mongodb.net/test?retryWrites=true&w=majority"
+  },
+  "version": 2,
+  "builds": [
+    { "src": "server.js", "use": "@now/node-server" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "server.js" }
+  ]
+}

@@ -10,6 +10,15 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+const cloudinary = require('./config/cloudinary')
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  const { buffer } = req.file
+  uploadFile(buffer)
+  .then(resp => res.send(resp))
+  .catch(err => res.status(500).send(err))
+})
+
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
 );
