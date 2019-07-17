@@ -58,10 +58,21 @@ router.route('/add').post((req, res) => {
                       date
                     });
   
-
   newProtege.save()
+
     .then((newProtege) => res.send(newProtege))
-    .catch(err => res.status(400).json('Error: ' + err));
+    
+    .catch( err => {
+      console.log(err)
+      let errMessages = [];
+      if (err.name == 'ValidationError') {
+        for (field in err.errors) {
+          errMessages.push(err.errors[field].message)
+        }
+      }
+      console.log(errMessages)
+      res.status(400).json({messages: errMessages})
+    })
 });
 
 
@@ -85,7 +96,17 @@ router.route('/update/:id').patch((req, res) => {
             proteges: protegesWithItems
           })
         })
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch( err => {
+          console.log(err)
+          let errMessages = [];
+          if (err.name == 'ValidationError') {
+            for (field in err.errors) {
+              errMessages.push(err.errors[field].message)
+            }
+          }
+          console.log(errMessages)
+          res.status(400).json({messages: errMessages})
+        })
     })
     .catch(err => res.status(400).json('Error: ' + err));
 });

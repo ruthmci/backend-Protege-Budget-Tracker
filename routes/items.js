@@ -28,7 +28,17 @@ router.route('/add').post((req, res) => {
 
   newItem.save()
   .then(() => res.json('Item added!'))
-  .catch(err => res.status(400).json('Error: ' + err));
+  .catch( err => {
+    console.log(err)
+    let errMessages = [];
+    if (err.name == 'ValidationError') {
+      for (field in err.errors) {
+        errMessages.push(err.errors[field].message)
+      }
+    }
+    console.log(errMessages)
+    res.status(400).json({messages: errMessages})
+  })
 });
 
 // Get one item route
@@ -57,7 +67,17 @@ router.route('/update/:id').patch((req, res) => {
 
       item.save()
         .then(() => res.json('Item updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch( err => {
+          console.log(err)
+          let errMessages = [];
+          if (err.name == 'ValidationError') {
+            for (field in err.errors) {
+              errMessages.push(err.errors[field].message)
+            }
+          }
+          console.log(errMessages)
+          res.status(400).json({messages: errMessages})
+        })
     })
     .catch(err => res.status(400).json('Error: ' + err));
 });
