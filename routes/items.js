@@ -1,12 +1,17 @@
+// Routes for items purchased
+
 const router = require('express').Router();
 let Item = require('../models/items.model');
 
+// Get all items route
 router.route('/').get((req, res) => {
   Item.find()
     .then(items => res.json(items))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+
+// Add an item route 
 router.route('/add').post((req, res) => {
  
   const protege_id = req.body.protegeId;
@@ -26,18 +31,22 @@ router.route('/add').post((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Get one item route
 router.route('/:id').get((req, res) => {
   Item.findById(req.params.id)
     .then(item => res.json(item))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Delete one item route
 router.route('/:id').delete((req, res) => {
   Item.findByIdAndDelete(req.params.id)
     .then(() => res.json('Item deleted.'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+
+// Update one item route
 router.route('/update/:id').patch((req, res) => {
   Item.findById(req.params.id)
     .then(item => {

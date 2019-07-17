@@ -1,7 +1,10 @@
+// Routes for proteges
+
 const router = require('express').Router();
 let Protege = require('../models/proteges.model');
 let Item = require('../models/items.model');
 
+// Get all proteges route - returns proteges with their related items
 router.route('/').get((req, res) => {
   Protege.find()
   . then (proteges => {
@@ -15,13 +18,15 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-
+// Delete one protege route
 router.route('/:id').delete((req, res) => {
   Protege.findByIdAndDelete(req.params.id)
     .then(() => res.json('Protege deleted.'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+
+// Get one protege route - returns protege with its related items
 router.route('/:id').get((req, res) => {
   Protege.findById(req.params.id)
   .then(async (protege) => {
@@ -32,13 +37,12 @@ router.route('/:id').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-
+// Function used by the get all proteges and get one proteges routes to find the items related to a protege and return them 
 findUserItems = async (protegeId) => {
   return await Item.find({protege_id: protegeId })
 }
 
-
-
+// Route for adding a protege
 router.route('/add').post((req, res) => {
   const protegename = req.body.protegename;
   const protegeemail = req.body.protegeemail;
@@ -62,7 +66,7 @@ router.route('/add').post((req, res) => {
 
 
 
-
+// Route for updating a protege
 router.route('/update/:id').patch((req, res) => {
   Protege.findById(req.params.id)
     .then(protege => {
@@ -70,7 +74,17 @@ router.route('/update/:id').patch((req, res) => {
       protege.protegeemail = (req.body.protegeemail);
 
       protege.save()
-        .then(() => res.json('Protege updated!'))
+        .then(async () => {
+          const proteges = await Protege.find()
+          const protegesWithItems = await Promise.all(proteges.map(async protege => {
+            const items = await findUserItems(protege._id)
+            return{protege, items}
+          }))
+          res.send({
+            message: 'proteges updated',
+            proteges: protegesWithItems
+          })
+        })
         .catch(err => res.status(400).json('Error: ' + err));
     })
     .catch(err => res.status(400).json('Error: ' + err));
