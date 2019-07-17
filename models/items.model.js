@@ -9,10 +9,11 @@ const itemSchema = new Schema({
   protege_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Protege' },
   description: { type: String, required: [true, 'Description required'] },
   expenditure: { type: Number,
+                  required: [true,'Expenditure required'],
                   min: [0, 'Needs to be a positive number'],
-                  max: [1000, 'Outside protege budget'], required: true }, 
-                  date: { type: Date },
-                  // required: [true,'Expenditure required']
+                  max: [1000, 'Outside protege budget'], 
+                   }, 
+  date: { type: Date },
 }, {
   timestamps: true,
 });
