@@ -69,6 +69,8 @@ router.route('/add').post((req, res) => {
         for (field in err.errors) {
           errMessages.push(err.errors[field].message)
         }
+      } else if(err.code === 11000) {
+        errMessages.push("Protege email already in use")
       }
       console.log(errMessages)
       res.status(400).json({messages: errMessages})

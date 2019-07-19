@@ -16,7 +16,7 @@ router.route('/add').post((req, res) => {
  
   const protege_id = req.body.protegeId;
   const description = req.body.description;
-  const expenditure = Number(req.body.expenditure);
+  const expenditure = Number(req.body.expenditure) ? Number(req.body.expenditure) : null;
   const date =(req.body.date);
 
   const newItem = new Item({

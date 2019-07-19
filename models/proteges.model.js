@@ -13,10 +13,10 @@ const validateEmail = function(email) {
 const protegeSchema = new Schema({
   protegename: { type: String, required: [true, 'Name required']},
   protegeemail:{type: String,
-                unique: true,
-                validate: [validateEmail, 'Please fill a valid email address'],
-                match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
-                required: [true, 'Protege email required']
+                unique: [true, 'That email address is already registered'], 
+                validate: [validateEmail, 'Please enter a valid email address'],
+                match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email address'],
+                required: [true, 'Please enter the protege email']
               },
   expenditure: { type: Number },
   balance: { type: Number},
