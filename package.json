@@ -2,9 +2,13 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "api.js",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "start": "nodemon api.js"
   },
   "keywords": [],
   "author": "",
