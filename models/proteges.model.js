@@ -11,7 +11,7 @@ const validateEmail = function(email) {
 
 // Name and email are validated because they are entered by the user
 const protegeSchema = new Schema({
-  protegename: { type: String, required: [true, 'Name required']},
+  protegename: { type: String, required: [true, 'Please enter the protege name']},
   protegeemail:{type: String,
                 unique: [true, 'That email address is already registered'], 
                 validate: [validateEmail, 'Please enter a valid email address'],
